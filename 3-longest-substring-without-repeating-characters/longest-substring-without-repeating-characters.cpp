@@ -3,24 +3,24 @@ class Solution {
     public:
     int lengthOfLongestSubstring(string s) {
         int n = s.length();
-    int maxi = 0;
+        unordered_map<char,int> lastseen;
 
-    for(int i = 0; i < n; i++) {
+        int left=0;
+        int right=0;
+        int maxlen=0;
 
-        int hash[256] = {0};
-
-        for(int j = i; j < n; j++) {
-
-            if(hash[s[j]] == 1) {
-                break;
+        while(right<n){
+            if(lastseen.count(s[right]) && lastseen[s[right]]>=left){
+                left=lastseen[s[right]] + 1;
             }
+            lastseen[s[right]]=right;
 
-            hash[s[j]] = 1;
+            maxlen=max(maxlen, right-left+1);
 
-            maxi = max(maxi, j - i + 1);
+            right++;
+
         }
-    }
 
-    return maxi;
+        return maxlen;
     }
 };
