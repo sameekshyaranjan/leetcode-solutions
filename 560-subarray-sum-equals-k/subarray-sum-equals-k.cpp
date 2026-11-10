@@ -3,19 +3,20 @@ public:
     int subarraySum(vector<int>& nums, int k) {
         int n=nums.size();
         int cnt=0;
+        int sum=0;
+        map<int, int> presummap;
+
+        presummap[0]=1;
 
         for(int i=0;i<n;i++){
-            int sum=0;
-            
-            for(int j=i;j<n;j++){
-                sum=sum+nums[j];
+            sum=sum+nums[i];
 
-                if(sum==k){
-                    cnt++;
-                }
-            }
+            int rem=sum-k;
+            if(presummap.find(rem)!=presummap.end()){
+               cnt+=presummap[rem];
+            }  
 
-            
+            presummap[sum]+=1;    
         }
         return cnt;
     }
